@@ -1,3 +1,116 @@
+joint01_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: base_joint
+    joint_speed: 1.17
+    motor:
+        id: 11
+        init: 512
+        min: 0
+        max: 1023
+
+
+
+joint02_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: joint_tilt
+    joint_speed: 1.17
+    motor:
+        id: 12
+        init: 512
+        min: 0
+        max: 1023
+
+
+
+joint03_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: shoulder_joint
+    joint_speed: 1.17
+    motor:
+        id: 13
+        init: 512
+        min: 0
+        max: 1023
+
+
+
+joint04_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: elbow_joint
+    joint_speed: 1.17
+    motor:
+        id: 14
+        init: 512
+        min: 0
+        max: 1023
+
+
+
+joint05_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: wrist_joint
+    joint_speed: 1.17
+    motor:
+        id: 15
+        init: 512
+        min: 0
+        max: 1023
+
+
+
+joint06_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: elbow_joint
+    joint_speed: 1.17
+    motor:
+        id: 14
+        init: 512
+        min: 0
+        max: 1023
+
+
+
+joint07_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: wrist_joint
+    joint_speed: 1.17
+    motor:
+        id: 15
+        init: 512
+        min: 0
+        max: 1023
+
+
+
+
+
+
+
+
+
+
+
 joint11_controller:
     controller:
         package: dynamixel_controllers
@@ -59,6 +172,36 @@ joint14_controller:
 
 
 joint15_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: wrist_joint
+    joint_speed: 1.17
+    motor:
+        id: 15
+        init: 512
+        min: 0
+        max: 1023
+
+
+
+joint16_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: elbow_joint
+    joint_speed: 1.17
+    motor:
+        id: 14
+        init: 512
+        min: 0
+        max: 1023
+
+
+
+joint17_controller:
     controller:
         package: dynamixel_controllers
         module: joint_position_controller
