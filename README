@@ -1,5 +1,4 @@
 
-
 /1/to start the system, enter the WorkSpace
 
 cd ~/catkin_ws
@@ -10,7 +9,7 @@ source devel/setup.bash
 
 /3/enter main work folder
 
-cd ~/catkin_ws/src/my_dynamixel_tutorial
+cd ~/catkin_ws/src
 
 /4/launch controller
 
@@ -21,11 +20,11 @@ roslaunch my_dynamixel_tutorial controller_manager.launch
 /6/launch desired system
 
 //a/ roslaunch my_dynamixel_tutorial start_tilt_controller.launch
-[INOPERABLE]//b/ roslaunch my_dynamixel_tutorial start_dual_motor_controller.launch [WOULD GET STUCK WAITING FROM RESPONSE FROM MANAGER]
-//c/ roslaunch my_dynamixel_tutorial start_meta_controller.launch
+//b/ roslaunch my_dynamixel_tutorial start_meta_controller.launch
 
 /7/control the desired system (if applicable)
 
-//a/ rostopic pub -1 /tilt_controller/command std_msgs/Float64 -- <radian value, from -2.617 to +2.617, no sideways arrows needed just straight number>
-[INOPERABLE]//b/ rostopic pub -1 /dual_motor_controller/command std_msgs/Float64 -- <radian value, //a/>
-//c/ rostopic pub -1 /jointXX_controller/command std_msgs/Float64 -- <radian value, see //a/>
+//a/ rostopic pub -1 /tilt_controller/command std_msgs/Float64 -- <radian value, from -2.617 to +2.617>
+//b/ rostopic pub -1 /jointXX_controller/command std_msgs/Float64 -- <radian value, see a>
+	eg: rostopic pub -1 /joint01_controller/command std_msgs/Float64 -- 1
+
