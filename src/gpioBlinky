@@ -1,0 +1,29 @@
+#!/usr/bin/python
+
+import sys
+
+import pigpio
+
+import time
+
+myLED = 23
+
+PA = pigpio.pi()
+
+PA.set_mode(myLED, pigpio.OUTPUT)
+
+i = 1
+while i<6:
+
+	PA.write(myLED,1)
+	print("LED on")
+
+	time.sleep(1)
+
+	PA.write(myLED,0)
+	print("LED off")
+  	i += 1
+  	time.sleep(1)
+
+PA.stop()
+
