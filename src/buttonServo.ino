@@ -7,6 +7,8 @@
  http://www.arduino.cc/en/Tutorial/Sweep
 */
 
+//attempted ros.h subscriber node, worked at first reading a 0, did nothing on pi, then did nothing back on pc
+
 #include <Servo.h>
 
 const int buttonPin1 = 2;     // the number of the pushbutton pin
