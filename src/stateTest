@@ -1,0 +1,149 @@
+#!/usr/bin/python
+
+import sys
+
+import pigpio
+
+import time
+
+import rospy
+from std_msgs.msg import Float64
+
+
+# joints 4 5 7 11 14 15
+
+pub04 = rospy.Publisher('joint04_controller/command', Float64, queue_size=10);
+pub05 = rospy.Publisher('joint05_controller/command', Float64, queue_size=10);
+pub07 = rospy.Publisher('joint07_controller/command', Float64, queue_size=10);
+
+pub11 = rospy.Publisher('joint11_controller/command', Float64, queue_size=10);
+pub14 = rospy.Publisher('joint14_controller/command', Float64, queue_size=10);
+pub15 = rospy.Publisher('joint15_controller/command', Float64, queue_size=10);
+
+
+
+rospy.init_node('testing', anonymous=True)
+time.sleep(1)
+
+
+msg00 = 0
+rospy.loginfo(msg00)
+pub04.publish(msg00)
+pub05.publish(msg00)
+pub07.publish(msg00)
+
+pub11.publish(msg00)
+pub14.publish(msg00)
+pub15.publish(msg00)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+myLED1 = 20
+myLED2 = 21
+myButton1 = 24
+myButton2 = 25
+
+PA = pigpio.pi()
+
+PA.set_mode(myLED1,pigpio.OUTPUT)
+PA.set_mode(myLED2,pigpio.OUTPUT)
+PA.set_mode(myButton1,pigpio.INPUT)
+PA.set_mode(myButton2,pigpio.INPUT)
+
+PA.set_PWM_range(myLED1,255)
+PA.set_PWM_range(myLED2,255)
+
+# PA.write(myLED,1)
+PA.write(myLED1,0)
+PA.write(myLED2,0)
+
+
+L = 10
+i = 1
+
+Alpha = 1
+Beta = 2
+Gamma = 3
+
+State = Alpha
+
+while i == 1:
+
+	print("Start State Loop")
+	
+	while State == Alpha:
+	
+		if PA.read(myButton1) == 1 and PA.read(myButton2) == 0:
+			L += 10 
+		elif PA.read(myButton1) == 0 and PA.read(myButton2) == 1:
+			State = Beta
+		elif PA.read(myButton1) == 1 and PA.read(myButton2) == 1:
+			State = Gamma
+			i = 0
+
+		if L > 20:
+			L = 10
+		
+		if L == 10:
+			PA.set_PWM_dutycycle(myLED1,100)
+			PA.write(myLED2,0)
+			
+		if L ==20:
+			PA.set_PWM_dutycycle(myLED2,100)
+			PA.write(myLED1,0)
+			
+		print(L)
+		print("Alpha")
+		time.sleep(0.5)
+		
+		
+		
+	while State == Beta:
+	
+		if PA.read(myButton1) == 0 and PA.read(myButton2) == 1:
+			L += 10 
+		elif PA.read(myButton1) == 1 and PA.read(myButton2) == 0:
+			State = Alpha
+		elif PA.read(myButton1) == 1 and PA.read(myButton2) == 1:
+			State = Gamma
+			i = 0
+
+		if L > 20:
+			L = 10
+		
+		if L == 10:
+			PA.set_PWM_dutycycle(myLED1,100)
+			PA.set_PWM_dutycycle(myLED2,100)
+
+		if L == 20:
+			PA.write(myLED2,0)
+			PA.write(myLED1,0)
+			
+		print(L)
+		print("Beta")
+		time.sleep(0.5)
+	
+	
+		
+	time.sleep(0.5)
+	
+	#if PA.read(myButton1) == 1 and PA.read(myButton2) == 1:
+		#i = 0
+
+PA.write(myLED1,0)
+PA.write(myLED2,0)
+
+PA.stop()
+

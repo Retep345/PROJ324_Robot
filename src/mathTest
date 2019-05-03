@@ -1,0 +1,88 @@
+#!/usr/bin/python
+
+import sys
+
+import pigpio
+
+import time
+
+import math
+
+
+
+
+PA = pigpio.pi()
+
+
+i = 1
+
+def my_function(input1 = 1):
+	j = input1*5
+	j=j-2
+	return j
+
+while i == 1:
+
+	print("Start Maths")
+	
+	x = 5*4
+	time.sleep(0.5)
+	
+	print("5 times 4 is")
+	print(x)
+	
+	x = math.cos(1)
+	time.sleep(0.5)
+	
+	print("cosine of 1 is")
+	print(x)
+	
+	y = x*100
+	print(y)
+	Q = int(y)
+	print(Q)
+	p = float(Q)/100
+	
+	print("but it can be shortened to")
+	print(p)
+	
+	x = math.acos(p)
+	time.sleep(0.5)
+	
+	print("inverse cosine of 0.54 is")
+	print(x)
+	
+	p = my_function()
+	print(p)
+	p = my_function(3)
+	print(p)
+	
+	
+	time.sleep(0.5)
+	x = 7**2
+	time.sleep(0.5)
+	print("7 squared is")
+	print(x)
+	
+	time.sleep(0.5)
+	x = math.sqrt(x)
+	time.sleep(0.5)
+	print("square root it back to")
+	print(x)
+	
+	time.sleep(0.5)
+	nine9 = 9
+	seven7 = 7
+	x = math.sqrt(nine9+seven7)
+	time.sleep(0.5)
+	print("square root of 7 + 9 is")
+	print(x)
+		
+		
+	time.sleep(0.5)
+	
+	i = 0
+
+
+PA.stop()
+
