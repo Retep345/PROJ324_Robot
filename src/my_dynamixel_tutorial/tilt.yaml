@@ -1,9 +1,26 @@
+
+joint01_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: TEST_1
+    joint_speed: 1.17
+    motor:
+        id: 1
+        init: 512
+        min: 0
+        max: 1023
+
+
+
+
 joint04_controller:
     controller:
         package: dynamixel_controllers
         module: joint_position_controller
         type: JointPositionController
-    joint_name: RIGHT_elbow_joint
+    joint_name: TEST_4
     joint_speed: 1.17
     motor:
         id: 4
@@ -18,15 +35,26 @@ joint05_controller:
         package: dynamixel_controllers
         module: joint_position_controller
         type: JointPositionController
-    joint_name: RIGHT_wrist_joint
+    joint_name: TEST_5
     joint_speed: 1.17
     motor:
         id: 5
         init: 512
         min: 0
         max: 1023
-
-
+        
+joint06_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: TEST_6
+    joint_speed: 1.17
+    motor:
+        id: 6
+        init: 512
+        min: 0
+        max: 1023
 
 
 
@@ -35,7 +63,7 @@ joint07_controller:
         package: dynamixel_controllers
         module: joint_position_controller
         type: JointPositionController
-    joint_name: RIGHT_shoulder_joint
+    joint_name: TEST_7
     joint_speed: 1.17
     motor:
         id: 7
@@ -58,7 +86,7 @@ joint11_controller:
         package: dynamixel_controllers
         module: joint_position_controller
         type: JointPositionController
-    joint_name: LEFT_shoulder_joint
+    joint_name: TEST_11
     joint_speed: 1.17
     motor:
         id: 11
@@ -68,33 +96,60 @@ joint11_controller:
 
 
 
-
-
-
-joint14_controller:
+joint12_controller:
     controller:
         package: dynamixel_controllers
         module: joint_position_controller
         type: JointPositionController
-    joint_name: LEFT_elbow_joint
+    joint_name: TEST_12
     joint_speed: 1.17
     motor:
-        id: 14
+        id: 12
         init: 512
         min: 0
         max: 1023
 
 
 
-joint15_controller:
+joint13_controller:
     controller:
         package: dynamixel_controllers
         module: joint_position_controller
         type: JointPositionController
-    joint_name: LEFT_wrist_joint
+    joint_name: TEST_13
     joint_speed: 1.17
     motor:
-        id: 15
+        id: 13
+        init: 512
+        min: 0
+        max: 1023
+
+
+
+joint16_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: TEST_16
+    joint_speed: 1.17
+    motor:
+        id: 16
+        init: 512
+        min: 0
+        max: 1023
+
+
+
+joint17_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: TEST_17
+    joint_speed: 1.17
+    motor:
+        id: 17
         init: 512
         min: 0
         max: 1023
