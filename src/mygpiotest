@@ -1,0 +1,129 @@
+#!/usr/bin/python
+
+import sys
+
+import pigpio
+
+import time
+
+
+PA = pigpio.pi()
+
+PA.set_mode(2,pigpio.OUTPUT)
+PA.write(2,0)
+time.sleep(0.1)
+PA.set_mode(3,pigpio.OUTPUT)
+PA.write(3,0)
+time.sleep(0.1)
+PA.set_mode(4,pigpio.OUTPUT)
+PA.write(4,0)
+time.sleep(0.1)
+PA.set_mode(5,pigpio.OUTPUT)
+PA.write(5,0)
+time.sleep(0.1)
+print("5 pins")
+
+#BROKEN PA.set_mode(6,pigpio.OUTPUT)
+#BROKEN PA.write(6,0)
+
+PA.set_mode(7,pigpio.OUTPUT)
+PA.write(7,0)
+time.sleep(0.1)
+PA.set_mode(8,pigpio.OUTPUT)
+PA.write(8,0)
+time.sleep(0.1)
+PA.set_mode(9,pigpio.OUTPUT)
+PA.write(9,0)
+time.sleep(0.1)
+PA.set_mode(10,pigpio.OUTPUT)
+PA.write(10,0)
+time.sleep(0.1)
+print("10 pins")
+
+PA.set_mode(11,pigpio.OUTPUT)
+PA.write(11,0)
+time.sleep(0.1)
+PA.set_mode(12,pigpio.OUTPUT)
+PA.write(12,0)
+time.sleep(0.1)
+PA.set_mode(13,pigpio.OUTPUT)
+PA.write(13,0)
+time.sleep(0.1)
+PA.set_mode(14,pigpio.OUTPUT)
+PA.write(14,0)
+time.sleep(0.1)
+PA.set_mode(15,pigpio.OUTPUT)
+PA.write(15,0)
+time.sleep(0.1)
+print("15 pins")
+
+PA.set_mode(16,pigpio.OUTPUT)
+PA.write(16,0)
+time.sleep(0.1)
+PA.set_mode(17,pigpio.OUTPUT)
+PA.write(17,0)
+time.sleep(0.1)
+PA.set_mode(18,pigpio.OUTPUT)
+PA.write(18,0)
+time.sleep(0.1)
+PA.set_mode(19,pigpio.OUTPUT)
+PA.write(19,0)
+time.sleep(0.1)
+PA.set_mode(20,pigpio.OUTPUT)
+PA.write(20,0)
+time.sleep(0.1)
+print("20 pins")
+
+PA.set_mode(21,pigpio.OUTPUT)
+PA.write(21,0)
+time.sleep(0.1)
+PA.set_mode(22,pigpio.OUTPUT)
+PA.write(22,0)
+time.sleep(0.1)
+PA.set_mode(23,pigpio.OUTPUT)
+PA.write(23,0)
+time.sleep(0.1)
+PA.set_mode(24,pigpio.OUTPUT)
+PA.write(24,0)
+time.sleep(0.1)
+PA.set_mode(25,pigpio.OUTPUT)
+PA.write(25,0)
+time.sleep(0.1)
+print("25 pins")
+
+PA.set_mode(26,pigpio.OUTPUT)
+PA.write(25,0)
+time.sleep(0.1)
+PA.set_mode(27,pigpio.OUTPUT)
+PA.write(27,0)
+time.sleep(0.1)
+print("27 pins, all checked")
+
+
+
+LED =  13
+print(LED)
+
+PA.write(LED,0)
+
+time.sleep(1)
+
+PA.write(LED,1)
+
+time.sleep(1)
+
+PA.write(LED,0)
+
+time.sleep(1)
+
+PA.write(LED,1)
+
+time.sleep(1)
+
+PA.write(LED,0)
+
+
+
+
+PA.stop()
+
