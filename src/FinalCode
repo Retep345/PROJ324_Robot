@@ -1,0 +1,538 @@
+#!/usr/bin/python
+
+import sys
+
+import pigpio
+
+import time
+
+import rospy
+from std_msgs.msg import Float64
+
+
+time.sleep(1)
+
+
+ButtonTL = 26
+ButtonBL = 7
+ButtonTR =  11
+ButtonBR = 10
+		# ButtonXC = 3 UNUSABLE DUE TO UNKNOWN CAUSE
+#TL/BL/TR/BR/XC
+
+ButtonU = 18
+ButtonD = 15
+ButtonL = 14
+ButtonR = 19
+
+LEDw1 = 5             #w1
+LEDw2 = 8             #w2
+LEDw3 = 9             #w3
+LEDy1 = 2             #y1
+LEDy2 = 4             #y2
+LEDgrUD = 17          #gUrD
+LEDgrLR = 20          #gLrR
+LEDgrRL = 13          #rLgR
+LEDgrDU = 16          #rUgD
+
+PA = pigpio.pi()
+
+
+
+PA.set_mode(ButtonTL,pigpio.INPUT)
+PA.set_mode(ButtonBL,pigpio.INPUT)
+PA.set_mode(ButtonTR,pigpio.INPUT)
+PA.set_mode(ButtonBR,pigpio.INPUT)
+		#PA.set_mode(ButtonXC,pigpio.INPUT)
+print("mode buttons  set")
+
+PA.set_mode(ButtonU,pigpio.INPUT)
+PA.set_mode(ButtonD,pigpio.INPUT)
+PA.set_mode(ButtonL,pigpio.INPUT)
+PA.set_mode(ButtonR,pigpio.INPUT)
+print("dirrectional buttons set")
+
+PA.set_mode(LEDw1,pigpio.OUTPUT)
+PA.write(LEDw1,0)
+time.sleep(0.05)
+PA.set_mode(LEDw2,pigpio.OUTPUT)
+PA.write(LEDw2,0)
+time.sleep(0.05)
+PA.set_mode(LEDw3,pigpio.OUTPUT)
+PA.write(LEDw3,0)
+time.sleep(0.05)
+PA.set_mode(LEDy1,pigpio.OUTPUT)
+PA.write(LEDy1,0)
+time.sleep(0.05)
+PA.set_mode(LEDy2,pigpio.OUTPUT)
+PA.write(LEDy2,0)
+time.sleep(0.05)
+PA.set_mode(LEDgrUD,pigpio.OUTPUT)
+PA.write(LEDgrUD,0)
+time.sleep(0.05)
+PA.set_mode(LEDgrLR,pigpio.OUTPUT)
+PA.write(LEDgrLR,0)
+time.sleep(0.05)
+PA.set_mode(LEDgrRL,pigpio.OUTPUT)
+PA.write(LEDgrRL,0)
+time.sleep(0.05)
+PA.set_mode(LEDgrDU,pigpio.OUTPUT)
+PA.write(LEDgrDU,0)
+time.sleep(0.05)
+print("9 LEDs set")
+
+
+#		4/5		12/13			4/5		6/7
+#		7		11				3		8
+#		6/1		16/17			2/1		10/9
+#	pubXX = rospy.Publisher('jointXX_controller/command', Float64, queue_size=10);
+
+
+
+
+pub4 = rospy.Publisher('joint04_controller/command', Float64, queue_size=10);
+pub5 = rospy.Publisher('joint05_controller/command', Float64, queue_size=10);
+pub7 = rospy.Publisher('joint07_controller/command', Float64, queue_size=10);
+pub6 = rospy.Publisher('joint06_controller/command', Float64, queue_size=10);
+pub1 = rospy.Publisher('joint01_controller/command', Float64, queue_size=10);
+
+pub12 = rospy.Publisher('joint12_controller/command', Float64, queue_size=10);
+pub13 = rospy.Publisher('joint13_controller/command', Float64, queue_size=10);
+pub11 = rospy.Publisher('joint11_controller/command', Float64, queue_size=10);
+pub16 = rospy.Publisher('joint16_controller/command', Float64, queue_size=10);
+pub17 = rospy.Publisher('joint17_controller/command', Float64, queue_size=10);
+
+
+
+rospy.init_node('testing', anonymous=True)
+time.sleep(1)
+
+
+
+
+
+def AutoPublish(Motor, Radians):
+	msgAuto = Radians
+	rospy.loginfo(msgAuto)
+	Motor.publish(msgAuto)
+
+
+
+
+
+	
+def PubMotor(MotorID):
+	if MotorID == 1:
+		OutMotor = pub1
+	if MotorID == 2:
+		OutMotor = pub6
+	if MotorID == 3:
+		OutMotor = pub7
+	if MotorID == 4:
+		OutMotor = pub4
+	if MotorID == 5:
+		OutMotor = pub5
+			
+	if MotorID == 6:
+		OutMotor = pub12
+	if MotorID == 7:
+		OutMotor = pub13
+	if MotorID == 8:
+		OutMotor = pub11
+	if MotorID == 9:
+		OutMotor = pub17
+	if MotorID == 10:
+		OutMotor = pub16
+	return OutMotor
+
+
+
+
+
+
+def MotorStop(Condition, MotorID):
+	OutZero = 0
+	OutMin = 0
+	OutMax = 0
+	if MotorID == 1:
+		OutZero = 0
+		OutMin =  -1
+		OutMax = 1
+	if MotorID == 2:
+		OutZero = 0
+		OutMin =  -2
+		OutMax = 1
+	if MotorID == 3:
+		OutZero = 0
+		OutMin =  -1.5
+		OutMax = 1.5
+	if MotorID == 4:
+		OutZero = 0
+		OutMin =  -2
+		OutMax = 1
+	if MotorID == 5:
+		OutZero = 1.5
+		OutMin =  0
+		OutMax = 2
+			
+	if MotorID == 6:
+		OutZero = -1.5
+		OutMin =  -2
+		OutMax = 0
+	if MotorID == 7:
+		OutZero = 0
+		OutMin =  -1
+		OutMax = 2
+	if MotorID == 8:
+		OutZero = 0
+		OutMin =  -1.5
+		OutMax = 1.5
+	if MotorID == 9:
+		OutZero = 0
+		OutMin =  -1
+		OutMax = 2
+	if MotorID == 10:
+		OutZero = 0
+		OutMin =  -1
+		OutMax = 1
+		
+	if Condition == Zero:
+		OutStop = OutZero
+	elif Condition == Max:
+		OutStop = OutMax
+	elif Condition == Min:
+		OutStop = OutMin
+	return OutStop
+
+
+
+
+	
+
+
+
+#msg00 = 0
+#rospy.loginfo(msg00)
+#pub04.publish(msg00)
+
+AutoPublish(pub5, 1.5)
+AutoPublish(pub4, 0)
+AutoPublish(pub12, -1.5)
+AutoPublish(pub13, 0)
+time.sleep(0.1)
+AutoPublish(pub7, 0)
+AutoPublish(pub11, 0)
+time.sleep(0.1)
+AutoPublish(pub6, 0)
+AutoPublish(pub17, 0)
+time.sleep(0.1)
+AutoPublish(pub1, 0)
+AutoPublish(pub16, 0)
+time.sleep(0.1)
+
+
+
+
+time.sleep(1)
+
+Alpha = 1
+Beta = 2
+Gamma = 3
+Quiting = 4
+NextState = 1
+
+IDval= 2
+Zero = 1
+Max = 2
+Min = 0
+ValueLeft = [0,0,0,0,0,0,0,0,0,0,0]
+ValueRight = [0,0,0,0,0,0,0,0,0,0,0]
+L2R = [0,10,9,8,7,6]
+
+for x in range( 1,11):
+	ValueLeft[x] = MotorStop(Zero, x)
+
+
+i = 1
+while i == 1:
+	print("GO")
+
+	State = Alpha
+
+
+	while State == Alpha:
+		print("Alpha state")
+		#TL/BL/TR/BR/XC
+		if NextState == 1:
+			PA.write(LEDy1,1)
+			PA.write(LEDy2,0)
+			PA.write(LEDgrUD,1)
+			PA.write(LEDgrDU,0)
+			PA.write(LEDgrLR,1)
+			PA.write(LEDgrRL,0)
+			NextState = 0
+			IDval = 2
+		
+		if PA.read(ButtonTR) == 1 and PA.read(ButtonBR) ==1:
+			State = Beta
+			NextState = 1
+
+		if PA.read(ButtonBL) == 1 and PA.read(ButtonBR) ==1:
+			State = Gamma
+			NextState = 1
+
+
+		if ValueLeft[IDval] > MotorStop(Max, IDval): ValueLeft[IDval] = MotorStop(Max, IDval)
+		elif ValueLeft[IDval] < MotorStop(Min, IDval): ValueLeft[IDval] = MotorStop(Min, IDval)
+		if IDval > 5: IDval = 5
+		elif IDval < 1: IDval = 1
+		print(IDval)
+		print(ValueLeft[IDval])
+		AutoPublish(PubMotor(IDval), ValueLeft[IDval])
+		print(NextState)
+		time.sleep(0.1)
+				
+				
+
+		if PA.read(ButtonTR) == 1 and PA.read(ButtonBR) == 0:
+			PA.write(LEDw1,1)
+			ValueLeft[IDval] = MotorStop(Zero, IDval)
+			time.sleep(0.5)
+		elif PA.read(ButtonTR) == 0:
+			PA.write(LEDw1,0)
+
+			
+
+		if PA.read(ButtonU) == 1:
+			PA.write(LEDgrDU,1)
+			IDval += 1
+			if IDval > 5: IDval = 5
+			elif IDval < 1: IDval = 1
+			time.sleep(0.5)
+		elif PA.read(ButtonU) == 0:
+			PA.write(LEDgrDU,0)
+
+		if PA.read(ButtonD) == 1:
+			PA.write(LEDgrDU,1)
+			IDval -= 1
+			if IDval > 5: IDval = 5
+			elif IDval < 1: IDval = 1
+			time.sleep(0.5)
+		elif PA.read(ButtonD) == 0:
+			PA.write(LEDgrDU,0)
+
+		if PA.read(ButtonR) == 1:
+			PA.write(LEDgrRL,1)
+			ValueLeft[IDval] += 0.1
+		elif PA.read(ButtonR) == 0:
+			PA.write(LEDgrRL,0)
+			
+			
+		if PA.read(ButtonL) == 1:
+			PA.write(LEDgrRL,1)
+			ValueLeft[IDval]  -= 0.1
+		elif PA.read(ButtonL) == 0:
+			PA.write(LEDgrRL,0)
+
+	
+		if PA.read(ButtonTL) == 1 and PA.read(ButtonTR) == 1:
+			State = Quiting
+			i = 0
+			
+			
+			
+			
+	while State == Beta:
+		print("Beta state")
+		#TL/BL/TR/BR/XC
+		if NextState == 1:
+			PA.write(LEDy2,1)
+			PA.write(LEDy1,0)
+			PA.write(LEDgrUD,1)
+			PA.write(LEDgrDU,0)
+			PA.write(LEDgrLR,1)
+			PA.write(LEDgrRL,0)
+			NextState = 0
+			IDval = 9
+
+		
+		if PA.read(ButtonTL) == 1 and PA.read(ButtonBL) ==1:
+			State = Alpha
+			NextState = 1
+			
+		if PA.read(ButtonBL) == 1 and PA.read(ButtonBR) ==1:
+			State = Gamma
+			NextState = 1
+
+		if ValueLeft[IDval] > MotorStop(Max, IDval): ValueLeft[IDval] = MotorStop(Max, IDval)
+		elif ValueLeft[IDval] < MotorStop(Min, IDval): ValueLeft[IDval] = MotorStop(Min, IDval)
+		if IDval > 10: IDval = 10
+		elif IDval < 6: IDval = 6
+		print(IDval)
+		print(ValueLeft[IDval])
+		AutoPublish(PubMotor(IDval), ValueLeft[IDval])
+		print(NextState)
+		time.sleep(0.1)
+				
+				
+
+		if PA.read(ButtonTL) == 1 and PA.read(ButtonBL) == 0:
+			PA.write(LEDw1,1)
+			ValueLeft[IDval]= MotorStop(Zero, IDval)
+			time.sleep(0.5)
+		elif PA.read(ButtonTL) == 0:
+			PA.write(LEDw1,0)
+
+			
+
+		if PA.read(ButtonU) == 1:
+			PA.write(LEDgrDU,1)
+			IDval -= 1
+			if IDval > 10: IDval = 10
+			elif IDval < 6: IDval = 6
+			time.sleep(0.5)
+		elif PA.read(ButtonU) == 0:
+			PA.write(LEDgrDU,0)
+
+		if PA.read(ButtonD) == 1:
+			PA.write(LEDgrDU,1)
+			IDval += 1
+			if IDval > 10: IDval = 10
+			elif IDval < 6: IDval = 6
+			time.sleep(0.5)
+		elif PA.read(ButtonD) == 0:
+			PA.write(LEDgrDU,0)
+
+		if PA.read(ButtonR) == 1:
+			PA.write(LEDgrRL,1)
+			ValueLeft[IDval] += 0.1
+		elif PA.read(ButtonR) == 0:
+			PA.write(LEDgrRL,0)
+			
+			
+		if PA.read(ButtonL) == 1:
+			PA.write(LEDgrRL,1)
+			ValueLeft[IDval]  -= 0.1
+		elif PA.read(ButtonL) == 0:
+			PA.write(LEDgrRL,0)
+
+	
+		if PA.read(ButtonTL) == 1 and PA.read(ButtonTR) == 1:
+			State = Quiting
+			i = 0
+			
+			
+			
+			
+			
+	while State == Gamma:
+		print("Gamma state")
+		#TL/BL/TR/BR/XC
+		if NextState == 1:
+			PA.write(LEDy2,1)
+			PA.write(LEDy1,1)
+			PA.write(LEDgrUD,1)
+			PA.write(LEDgrDU,0)
+			PA.write(LEDgrLR,1)
+			PA.write(LEDgrRL,1)
+			for x in range( 1,6):
+				AutoPublish(PubMotor(x), ValueLeft[x])
+				ValueRight[x] = -ValueLeft[x]
+				AutoPublish(PubMotor(L2R[x]), ValueRight[x])
+			NextState = 0
+			IDval = 2
+
+		
+		if PA.read(ButtonTL) == 1 and PA.read(ButtonBL) ==1:
+			State = Alpha
+			NextState = 1
+			
+		if PA.read(ButtonTR) == 1 and PA.read(ButtonBR) ==1:
+			State = Beta
+			NextState = 1
+
+		if ValueLeft[IDval] > MotorStop(Max, IDval): ValueLeft[IDval] = MotorStop(Max, IDval)
+		elif ValueLeft[IDval] < MotorStop(Min, IDval): ValueLeft[IDval] = MotorStop(Min, IDval)
+		if IDval > 5: IDval = 5
+		elif IDval < 1: IDval = 1
+		print(IDval)
+		print(L2R[IDval])
+		print(ValueLeft[IDval])
+		print(ValueLeft[L2R[IDval]])
+		AutoPublish(PubMotor(IDval), ValueLeft[IDval])
+		ValueRight[IDval] = -ValueLeft[IDval]
+		AutoPublish(PubMotor(L2R[IDval]), ValueRight[IDval])
+		print(NextState)
+		time.sleep(0.1)
+				
+				
+
+		if PA.read(ButtonTL) == 1:
+			PA.write(LEDw1,1)
+			ValueLeft[IDval]= MotorStop(Zero, IDval)
+			ValueRight[IDval] = -ValueLeft[IDval]
+			AutoPublish(PubMotor(IDval), ValueRight[IDval])
+			time.sleep(0.5)
+		elif PA.read(ButtonTL) == 0:
+			PA.write(LEDw1,0)
+
+			
+
+		if PA.read(ButtonU) == 1:
+			PA.write(LEDgrDU,1)
+			IDval += 1
+			if IDval > 5: IDval = 5
+			elif IDval < 1: IDval = 1
+			time.sleep(0.5)
+		elif PA.read(ButtonU) == 0:
+			PA.write(LEDgrDU,0)
+
+		if PA.read(ButtonD) == 1:
+			PA.write(LEDgrDU,1)
+			IDval -= 1
+			if IDval > 5: IDval = 5
+			elif IDval < 1: IDval = 1
+			time.sleep(0.5)
+		elif PA.read(ButtonD) == 0:
+			PA.write(LEDgrDU,0)
+
+		if PA.read(ButtonR) == 1:
+			PA.write(LEDgrRL,1)
+			ValueLeft[IDval] += 0.1
+		elif PA.read(ButtonR) == 0:
+			PA.write(LEDgrRL,0)
+			
+			
+		if PA.read(ButtonL) == 1:
+			PA.write(LEDgrRL,1)
+			ValueLeft[IDval]  -= 0.1
+		elif PA.read(ButtonL) == 0:
+			PA.write(LEDgrRL,0)
+
+	
+		if PA.read(ButtonTL) == 1 and PA.read(ButtonTR) == 1:
+			State = Quiting
+			i = 0
+			
+			
+			
+			
+			
+			
+			
+for x in range( 1,11):
+	AutoPublish(PubMotor(x), MotorStop(Zero, x))
+print("quit")
+PA.write(LEDw1,0)
+PA.write(LEDw2,0)
+PA.write(LEDw3,0)
+PA.write(LEDy1,0)
+PA.write(LEDy2,0)
+PA.write(LEDgrUD,0)
+PA.write(LEDgrLR,0)
+PA.write(LEDgrRL,0)
+PA.write(LEDgrDU,0)
+
+
+PA.stop()
+
