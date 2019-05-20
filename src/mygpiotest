@@ -99,31 +99,22 @@ PA.write(27,0)
 time.sleep(0.1)
 print("27 pins, all checked")
 
-
-
 LED =  13
 print(LED)
 
 PA.write(LED,0)
-
 time.sleep(1)
 
 PA.write(LED,1)
-
 time.sleep(1)
 
 PA.write(LED,0)
-
 time.sleep(1)
 
 PA.write(LED,1)
-
 time.sleep(1)
 
 PA.write(LED,0)
-
-
-
 
 PA.stop()
 
