@@ -1,11 +1,8 @@
 #!/usr/bin/python
 
 import sys
-
 import pigpio
-
 import time
-
 import rospy
 from std_msgs.msg import Float64
 
@@ -17,9 +14,8 @@ ButtonTL = 26
 ButtonBL = 7
 ButtonTR =  11
 ButtonBR = 10
-		# ButtonXC = 3 UNUSABLE DUE TO UNKNOWN CAUSE
+# ButtonXC = 3 UNUSABLE DUE TO UNKNOWN CAUSE
 #TL/BL/TR/BR/XC
-
 ButtonU = 18
 ButtonD = 15
 ButtonL = 14
@@ -37,13 +33,11 @@ LEDgrDU = 16          #rUgD
 
 PA = pigpio.pi()
 
-
-
 PA.set_mode(ButtonTL,pigpio.INPUT)
 PA.set_mode(ButtonBL,pigpio.INPUT)
 PA.set_mode(ButtonTR,pigpio.INPUT)
 PA.set_mode(ButtonBR,pigpio.INPUT)
-		#PA.set_mode(ButtonXC,pigpio.INPUT)
+#PA.set_mode(ButtonXC,pigpio.INPUT)
 print("mode buttons  set")
 
 PA.set_mode(ButtonU,pigpio.INPUT)
@@ -81,9 +75,9 @@ PA.write(LEDgrDU,0)
 time.sleep(0.05)
 print("9 LEDs set")
 
-
-#		4/5		12/13			4/5		6/7
-#		7		11				3		8
+#	orientation of motors				numbers used in arrays
+#		4/5		12/13			4/5		 6/7
+#		7		   11			3		   8
 #		6/1		16/17			2/1		10/9
 #	pubXX = rospy.Publisher('jointXX_controller/command', Float64, queue_size=10);
 
@@ -102,24 +96,13 @@ pub11 = rospy.Publisher('joint11_controller/command', Float64, queue_size=10);
 pub16 = rospy.Publisher('joint16_controller/command', Float64, queue_size=10);
 pub17 = rospy.Publisher('joint17_controller/command', Float64, queue_size=10);
 
-
-
 rospy.init_node('testing', anonymous=True)
 time.sleep(1)
-
-
-
-
 
 def AutoPublish(Motor, Radians):
 	msgAuto = Radians
 	rospy.loginfo(msgAuto)
 	Motor.publish(msgAuto)
-
-
-
-
-
 	
 def PubMotor(MotorID):
 	if MotorID == 1:
@@ -205,12 +188,6 @@ def MotorStop(Condition, MotorID):
 	return OutStop
 
 
-
-
-	
-
-
-
 #msg00 = 0
 #rospy.loginfo(msg00)
 #pub04.publish(msg00)
@@ -273,15 +250,16 @@ while i == 1:
 			NextState = 0
 			IDval = 2
 		
+		# leave to Beta
 		if PA.read(ButtonTR) == 1 and PA.read(ButtonBR) ==1:
 			State = Beta
 			NextState = 1
-
+		# leave to Gamma
 		if PA.read(ButtonBL) == 1 and PA.read(ButtonBR) ==1:
 			State = Gamma
 			NextState = 1
 
-
+		# joint limits
 		if ValueLeft[IDval] > MotorStop(Max, IDval): ValueLeft[IDval] = MotorStop(Max, IDval)
 		elif ValueLeft[IDval] < MotorStop(Min, IDval): ValueLeft[IDval] = MotorStop(Min, IDval)
 		if IDval > 5: IDval = 5
@@ -293,7 +271,7 @@ while i == 1:
 		time.sleep(0.1)
 				
 				
-
+		# joint reset
 		if PA.read(ButtonTR) == 1 and PA.read(ButtonBR) == 0:
 			PA.write(LEDw1,1)
 			ValueLeft[IDval] = MotorStop(Zero, IDval)
@@ -302,7 +280,7 @@ while i == 1:
 			PA.write(LEDw1,0)
 
 			
-
+		#ID up
 		if PA.read(ButtonU) == 1:
 			PA.write(LEDgrDU,1)
 			IDval += 1
@@ -311,7 +289,7 @@ while i == 1:
 			time.sleep(0.5)
 		elif PA.read(ButtonU) == 0:
 			PA.write(LEDgrDU,0)
-
+		#ID down
 		if PA.read(ButtonD) == 1:
 			PA.write(LEDgrDU,1)
 			IDval -= 1
@@ -321,25 +299,27 @@ while i == 1:
 		elif PA.read(ButtonD) == 0:
 			PA.write(LEDgrDU,0)
 
+		# joint angle +
 		if PA.read(ButtonR) == 1:
 			PA.write(LEDgrRL,1)
 			ValueLeft[IDval] += 0.1
 		elif PA.read(ButtonR) == 0:
 			PA.write(LEDgrRL,0)
-			
-			
+		# joint angle -
 		if PA.read(ButtonL) == 1:
 			PA.write(LEDgrRL,1)
 			ValueLeft[IDval]  -= 0.1
 		elif PA.read(ButtonL) == 0:
 			PA.write(LEDgrRL,0)
 
-	
+		#quit entire system
 		if PA.read(ButtonTL) == 1 and PA.read(ButtonTR) == 1:
 			State = Quiting
 			i = 0
 			
-			
+		
+		
+		
 			
 			
 	while State == Beta:
@@ -355,11 +335,11 @@ while i == 1:
 			NextState = 0
 			IDval = 9
 
-		
+		#leave to Alpha
 		if PA.read(ButtonTL) == 1 and PA.read(ButtonBL) ==1:
 			State = Alpha
 			NextState = 1
-			
+		#leave to Gamma
 		if PA.read(ButtonBL) == 1 and PA.read(ButtonBR) ==1:
 			State = Gamma
 			NextState = 1
@@ -374,8 +354,7 @@ while i == 1:
 		print(NextState)
 		time.sleep(0.1)
 				
-				
-
+		
 		if PA.read(ButtonTL) == 1 and PA.read(ButtonBL) == 0:
 			PA.write(LEDw1,1)
 			ValueLeft[IDval]= MotorStop(Zero, IDval)
@@ -442,11 +421,11 @@ while i == 1:
 			NextState = 0
 			IDval = 2
 
-		
+		#leave to Alpha
 		if PA.read(ButtonTL) == 1 and PA.read(ButtonBL) ==1:
 			State = Alpha
 			NextState = 1
-			
+		#leave to Beta
 		if PA.read(ButtonTR) == 1 and PA.read(ButtonBR) ==1:
 			State = Beta
 			NextState = 1
@@ -461,7 +440,7 @@ while i == 1:
 		print(ValueLeft[L2R[IDval]])
 		AutoPublish(PubMotor(IDval), ValueLeft[IDval])
 		ValueRight[IDval] = -ValueLeft[IDval]
-		AutoPublish(PubMotor(L2R[IDval]), ValueRight[IDval])
+		AutoPublish(PubMotor(L2R[IDval]), ValueRight[IDval])	#mirror values to right arm from left
 		print(NextState)
 		time.sleep(0.1)
 				
@@ -515,12 +494,7 @@ while i == 1:
 			i = 0
 			
 			
-			
-			
-			
-			
-			
-for x in range( 1,11):
+for x in range( 1,11):	#reset all arms
 	AutoPublish(PubMotor(x), MotorStop(Zero, x))
 print("quit")
 PA.write(LEDw1,0)
